@@ -37,11 +37,15 @@ require('packer').startup(function(use)
       'kyazdani42/nvim-web-devicons', -- optional, for file icons
     }
   }
-  use 'neovim/nvim-lspconfig'
+  -- lsp stuff
 
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/nvim-cmp'
+  
+  use "williamboman/mason.nvim" 
+  use "williamboman/mason-lspconfig.nvim" 
+  use 'neovim/nvim-lspconfig'
   -- completion icons
   use 'onsails/lspkind.nvim'
   -- vsnip

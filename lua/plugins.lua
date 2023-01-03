@@ -1,10 +1,16 @@
 require('lualine').setup()
 
 require("nvim-tree").setup({
+  filters = { dotfiles = false, custom = { '^.git$' } },
   disable_netrw = true,
   open_on_setup = true,
   diagnostics = {
     enable = true
+  },
+  git = {
+    enable = true,
+    ignore = false,
+    timeout = 500
   }
 })
 
@@ -58,6 +64,10 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -----------------
 -- LSP Config: --
 -----------------
+require("mason").setup()
+
+require("mason-lspconfig").setup()
+
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -99,6 +109,11 @@ require('lspconfig')['pyright'].setup{
   capabilities = capabilities
 }
 
+require('lspconfig')['svelte'].setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
 -----------------
 -- Treesitter Config: --
 -----------------
@@ -121,6 +136,7 @@ ts.setup {
     "yaml",
     "css",
     "html",
+    "svelte",
   },
   autotag = {
     enable = true,
