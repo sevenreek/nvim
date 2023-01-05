@@ -1,4 +1,5 @@
-require('lualine').setup()
+lualine = require('lualine')
+lualine.setup()
 
 require("nvim-tree").setup({
   filters = { dotfiles = false, custom = { '^.git$' } },
@@ -77,7 +78,7 @@ local on_attach = function(client, bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -130,6 +131,7 @@ ts.setup {
     disable = {},
   },
   ensure_installed = {
+    "typescript",
     "tsx",
     "javascript",
     "json",
@@ -184,3 +186,30 @@ prettier.setup({
 -- Telescope Config: --
 -----------------------
 local telescope = require("telescope")
+telescope.setup {
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules"
+    }
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    }
+  }
+}
+telescope.load_extension('fzf')
+-----------------------
+-- Autosessions Config: --
+-----------------------
+require("auto-session").setup {
+  log_level = "error",
+  cwd_change_handling = {
+    post_cwd_changed_hook = function()
+      lualine.refresh()
+    end,
+  },
+}

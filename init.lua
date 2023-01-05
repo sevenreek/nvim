@@ -59,6 +59,9 @@ require('packer').startup(function(use)
   --telescope
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  -- sessions
+  use 'rmagatti/auto-session'
 
 
   -- PACKER SYNC
