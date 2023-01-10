@@ -48,6 +48,9 @@ cmp.setup({
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
+  experimental = {
+    ghost_text=true,
+  },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
@@ -68,10 +71,14 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require("mason").setup()
 
 require("mason-lspconfig").setup()
+local signature_setup = {
+  hint_prefix = "^ "
+}
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  require('lsp_signature').on_attach(signature_setup, bufnr)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -213,3 +220,4 @@ require("auto-session").setup {
     end,
   },
 }
+

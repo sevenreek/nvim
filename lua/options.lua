@@ -19,7 +19,7 @@ vim.opt.expandtab = true -- tab to spaces in insert mode
 vim.opt.smartindent = true -- autoindent on special chars like {
 
 -- COMPLETION & HIGHLIGHT
-vim.opt.completeopt={"noinsert", "menuone", "noselect"} -- completion context menu
+vim.opt.completeopt={"preview", "menuone"} -- completion context menu
 vim.opt.wildmenu = true
 
 

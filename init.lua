@@ -39,8 +39,11 @@ require('packer').startup(function(use)
   }
   -- lsp stuff
 
+  use 'ray-x/lsp_signature.nvim'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
   
   use "williamboman/mason.nvim" 
@@ -62,7 +65,6 @@ require('packer').startup(function(use)
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   -- sessions
   use 'rmagatti/auto-session'
-
 
   -- PACKER SYNC
   if install_plugins then
