@@ -26,6 +26,9 @@ require('packer').startup(function(use)
   -- Dependency used by other plugins
   use 'nvim-lua/plenary.nvim'
 
+  -- Webicons used by plenty other plugins
+  use 'nvim-tree/nvim-web-devicons'
+
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -65,7 +68,8 @@ require('packer').startup(function(use)
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   -- sessions
   use 'rmagatti/auto-session'
-
+  -- tabline
+  use 'crispgm/nvim-tabline'
   -- PACKER SYNC
   if install_plugins then
     require('packer').sync()
