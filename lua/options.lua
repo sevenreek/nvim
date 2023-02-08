@@ -14,9 +14,10 @@ vim.opt.autoindent = true
 
 -- INDENT 
 vim.opt.tabstop = 4 -- each tab is 4 spaces
-vim.opt.shiftwidth = 2 -- but displays as 2
-vim.opt.expandtab = true -- tab to spaces in insert mode
+vim.opt.shiftwidth = 2 -- displays as 2
 vim.opt.smartindent = true -- autoindent on special chars like {
+--vim.opt.listchars = {tab = '| ', trail='•', nbsp='•'}
+vim.opt.list = true
 
 -- COMPLETION & HIGHLIGHT
 vim.opt.completeopt={"preview", "menuone"} -- completion context menu

@@ -104,6 +104,11 @@ _G.packer_plugins = {
     path = "/home/sevenreek/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/sevenreek/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["lsp_signature.nvim"] = {
     loaded = true,
     path = "/home/sevenreek/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",

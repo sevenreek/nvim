@@ -70,6 +70,8 @@ require('packer').startup(function(use)
   use 'rmagatti/auto-session'
   -- tabline
   use 'crispgm/nvim-tabline'
+  -- indent lines
+  use "lukas-reineke/indent-blankline.nvim"
   -- PACKER SYNC
   if install_plugins then
     require('packer').sync()

@@ -1,10 +1,10 @@
 lualine = require('lualine')
 lualine.setup()
 
-require("nvim-tree").setup({
+local nvimtree = require("nvim-tree")
+nvimtree.setup({
   filters = { dotfiles = false, custom = { '^.git$' } },
   disable_netrw = true,
-  open_on_setup = true,
   diagnostics = {
     enable = true
   },
@@ -14,6 +14,30 @@ require("nvim-tree").setup({
     timeout = 500
   }
 })
+
+local function open_nvim_tree(data)
+
+  -- buffer is a [No Name]
+  local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+  -- buffer is a directory
+  local directory = vim.fn.isdirectory(data.file) == 1
+
+  if not no_name and not directory then
+    return
+  end
+
+  -- change to the directory
+  if directory then
+    vim.cmd.cd(data.file)
+  end
+
+  -- open the tree
+  local api = require("nvim-tree.api")
+  api.tree.open()
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback=open_nvim_tree })
 
 -----------------
 -- cmp Config: --
@@ -129,6 +153,12 @@ require('lspconfig')['svelte'].setup{
   flags = lsp_flags,
   capabilities = capabilities
 }
+
+require('lspconfig')['jsonls'].setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
 -----------------
 -- Treesitter Config: --
 -----------------
@@ -154,6 +184,7 @@ ts.setup {
     "html",
     "svelte",
     "python",
+    "json",
   },
   autotag = {
     enable = true,
@@ -220,6 +251,12 @@ telescope.load_extension('fzf')
 -----------------------
 -- Autosessions Config: --
 -----------------------
+local function restore_nvim_tree()
+  local nvim_tree_api = require('nvim-tree.api')
+  nvim_tree_api.tree.change_root(vim.fn.getcwd())
+  nvim_tree_api.tree.reload()
+end
+
 require("auto-session").setup {
   log_level = "error",
   cwd_change_handling = {
@@ -227,6 +264,21 @@ require("auto-session").setup {
       lualine.refresh()
     end,
   },
+  post_restore_cmds = {restore_nvim_tree},
 }
+-----------------------
+-- Tabline Config: --
+-----------------------
 
 require('tabline').setup({})
+
+-----------------------
+-- Line indent Config: --
+-----------------------
+require("indent_blankline").setup {
+-- for example, context is off by default, use this to turn it on
+  show_current_context = true,
+  show_current_context_start = true,
+  char = '⁞',
+  use_treesitter = true
+}
