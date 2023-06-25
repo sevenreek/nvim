@@ -37,7 +37,7 @@ local function open_nvim_tree(data)
   api.tree.open()
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback=open_nvim_tree })
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback=open_nvim_tree })
 
 -----------------
 -- cmp Config: --
@@ -261,11 +261,26 @@ require("auto-session").setup {
   log_level = "error",
   cwd_change_handling = {
     post_cwd_changed_hook = function()
-      lualine.refresh()
+		lualine.refresh()
+		restore_nvim_tree()
     end,
   },
   post_restore_cmds = {restore_nvim_tree},
 }
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+-- Autosession fix
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  pattern = 'NvimTree*',
+  callback = function()
+    local api = require('nvim-tree.api')
+    local view = require('nvim-tree.view')
+
+    if not view.is_visible() then
+      api.tree.open()
+    end
+  end,
+})
 -----------------------
 -- Tabline Config: --
 -----------------------
